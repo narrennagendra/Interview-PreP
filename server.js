@@ -7,7 +7,8 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 
-const MONGODB_URI = "mongodb+srv://20h51a0508:PjAlu9M0aWwdCaEd@cluster0.lzdphsj.mongodb.net/?retryWrites=true&w=majority";
+const MONGODB_URI = require('./util/mondodb-uri');
+
 const app = express();
 const store = new MongoDBStore({
 	uri: MONGODB_URI,
@@ -29,16 +30,11 @@ app.use(
 );
 app.use(flash());
 
-//all the routes will be here
-app.get("/", function(req,res){
-	res.render("home");
-});
-app.get("/login", function(req, res){
-	res.render("Authentication/login");
-});
-app.get("/signup", function(req, res){
-	res.render("Authentication/signup");
-});
+const indexRoutes = require('./routes/index');
+const authRoutes = require('./routes/auth');
+
+app.use(indexRoutes)
+app.use(authRoutes);
 
 mongoose.connect(MONGODB_URI)
 	.then(result => {

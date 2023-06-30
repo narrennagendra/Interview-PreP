@@ -9,6 +9,10 @@ exports.getAuthentication = (req, res, next) => {
 };
 
 exports.postLogin = async (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).redirect('/authenticate');
+	}
 	const email = req.body.email;
 	const password = req.body.password;
 	try {
@@ -34,6 +38,10 @@ exports.postLogin = async (req, res, next) => {
 };
 
 exports.postSignup = async (req, res, next) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).redirect('/authenticate');
+	}
 	const name = req.body.name;
 	const email = req.body.email;
 	const password = req.body.password;

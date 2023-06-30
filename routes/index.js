@@ -4,6 +4,8 @@ const router = express.Router();
 
 const homeController = require('../controllers/index');
 
-router.get('/', homeController.getHome);
+const isAuth = require('../middleware/is-auth');
+
+router.get('/', isAuth, homeController.getHome);
 
 module.exports = router;

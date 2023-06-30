@@ -51,3 +51,10 @@ exports.postSignup = async (req, res, next) => {
 		console.log(err);
 	}
 };
+
+exports.getLogout = (req, res, next) => {
+	req.session.destroy((err) => {
+		console.log(err);
+		res.redirect('/authenticate');
+	});
+};

@@ -7,6 +7,8 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 
+const User = require('./models/user');
+
 const MONGODB_URI = require('./util/mondodb-uri');
 
 const app = express();
@@ -29,6 +31,22 @@ app.use(
 	})
 );
 app.use(flash());
+
+app.use(async (req, res, next) => {
+	if (!req.session.user) {
+		return next();
+	}
+	try {
+		const user = await User.findById(req.session.user._id)
+		if (!user) {
+			return next();
+		}
+		req.user = user;
+		next();
+	} catch (err) {
+		console.log(err);
+	}
+});
 
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');

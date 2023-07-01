@@ -1,9 +1,12 @@
-<%- include("../partials/header") -%>
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://kit.fontawesome.com/b42148c4b8.js" crossorigin="anonymous"></script>
+<link  href="https://fonts.googleapis.com/css?family=QuickSand:500" rel ="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<form action="/signup" method="POST">
 			<h1>Create Account</h1>
-			<span>or use your email for registration</span>
+			<!-- <span>or use your email for registration</span> -->
 			<input type="text" placeholder="Name" name="name" />
 			<input type="email" placeholder="Email" name="email" />
 			<input type="password" placeholder="Password" name="password" />
@@ -13,7 +16,7 @@
 	<div class="form-container sign-in-container">
 		<form action="/login" method="POST">
 			<h1>Sign in</h1>
-			<span>or use your account</span>
+			<!-- <span>or use your account</span> -->
 			<input type="email" placeholder="Email" name="email" />
 			<input type="password" placeholder="Password" name="password" />
 			<a href="#">Forgot your password?</a>

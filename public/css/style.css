@@ -12,9 +12,9 @@ body {
 	align-items: center;
 	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
-	height: 60vh;
-    width: auto;
-	margin: -20px 0 50px;
+	height: 100%;
+    	width: auto;
+	margin: 20px 0 50px;
 }
 
 nav .logo {

@@ -1,0 +1,24 @@
+<%- include('partials/header') -%>
+<link rel="stylesheet" href="css/post.css">
+<div class="container form-container sign-in-container">
+    <h1>#Problem-Title</h1>
+    <p>
+        #Problem-Content
+    </p>
+    <a id="registerBtn" class="btn">See <span class="highlight">Editorial</span></a>
+    <!-- The Modal -->
+	<div id="registerModal" class="modal animated fadeIn">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <a id="registerBtn2"><i class="fa-solid fa-circle-xmark close"></i></a>
+        <div class="modal-form">
+            <h1>Editorial</h1>
+            <p>
+                #Editorial Content
+           </p>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="js/editorial.js"></script>
+<%- include('partials/footer') -%>

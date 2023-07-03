@@ -32,7 +32,16 @@ body {
   background-image: linear-gradient(-45deg, #EEF0F3 0%, #F6F5F3 100%);
 	font-family: helvetica, arial, sans-serif,'Muli';
 } */
-
+/* ul{
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+} */
+ul li {
+    list-style: none;
+	padding: 1px;
+}
 a{
 	text-decoration: none;
 }
@@ -101,9 +110,10 @@ p {
 ul {
 	list-style-type:none;
 	margin: 0;
- padding: 0;
- overflow: hidden;
+ 	padding: 5px;
+ 	overflow: hidden;
 	margin-bottom: 1em;
+	display: flex;
 }
 
 .info {

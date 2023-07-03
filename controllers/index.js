@@ -10,3 +10,6 @@ exports.getNewProblem = (req,res, next) => {
 exports.getNewBlog = (req,res, next) => {
 	res.render('blogCreate');
 }
+exports.getProblem = (req,res,next) => {
+	res.render('viewProblem');
+}

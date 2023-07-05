@@ -1,49 +1,51 @@
 <%- include('partials/header') -%>
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/post.css">
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-	const editor = new Quill('#editor', {
-		modules: {
-			toolbar: [
-				[{ header: [1, 2, false] }],
-				['bold', 'italic', 'underline'],
-				['image', 'code-block']
-			]
-		},
-		theme: 'snow',
-	});
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/post.css">
+	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-	const form = document.querySelector('form');
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
+	<div class="container form-container sign-in-container">
+		<h2>Compose</h2>
+		<div class="title">
+			<label>Title</label>
+			<textarea class="form-control" name="titleInput" cols="100" rows="1" class="composeCon"></textarea>
+		</div>
+		<br>
+		<label>Post</label>
+		<br><br>
+		<div id="editor"></div>
+		<br>
+		<script>
+			var editor = new Quill('#editor', {
+				modules: {
+					toolbar: [
+						[{ header: [1, 2, false] }],
+						['bold', 'italic', 'underline'],
+						['image', 'code-block']
+					]
+				},
+				theme: 'snow',
+			});
 
-		const content = editor.root.innerHTML;
+			async function sendPost() {
+				const content = editor.getContents().ops;
+				const title = document.querySelector('.form-control').value;
+				const data = {
+					content: content,
+					title: title,
+				}
+				const response = await fetch('/createBlog', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				});
+				if(response.ok){
+					window.location.replace('http://localhost:3000');
+				}
+			}
 
-		// Create a hidden input field dynamically and set its value to the editor content
-		const inputField = document.createElement('input');
-		inputField.type = 'hidden';
-		inputField.name = 'editorData';
-		inputField.value = content;
-		form.appendChild(inputField);
-
-		form.submit();
-	});
-});
-  </script>
-
-<form action="/submit" method="post" class="container form-container sign-in-container">
-	<h2>Compose</h2>
-	<div class="title">
-		<label>Title</label>
-		<textarea class="form-control" name="titleInput" cols="100" rows="1" class="composeCon"></textarea>
+		</script>
+		<button onclick="sendPost()" class="btn">Publish</button>
 	</div>
-	<br>
-	<label >Post</label>
-	<br><br>
-	<div id="editor"></div>
-	<br>
-	<button type="submit" class="btn">Publish</button>    
-</form>
-<%- include('partials/footer') -%>
+	<%- include('partials/footer') -%>

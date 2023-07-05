@@ -12,7 +12,7 @@ const blogSchema = new Schema({
 		ref: 'User',
 		required: true,
 	},
-	body: {
+	content: {
 	  type: Object,
 	  required: true,
 	},

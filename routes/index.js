@@ -7,9 +7,8 @@ const homeController = require('../controllers/index');
 const isAuth = require('../middleware/is-auth');
 
 router.get('/', isAuth, homeController.getHome);
-router.get('/problems', isAuth, homeController.getProblems);
-router.get("/problemPost", isAuth, homeController.getNewProblem);
-router.get("/blogCreate", isAuth, homeController.getNewBlog);
-router.get("/viewProblem", isAuth, homeController.getProblem);
+router.get("/createBlog", isAuth, homeController.getCreateBlog);
+router.post('/createBlog', isAuth, homeController.postCreateBlog);
+
 
 module.exports = router;

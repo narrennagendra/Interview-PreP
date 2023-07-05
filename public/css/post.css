@@ -139,7 +139,7 @@ textarea{
 }
 #editor, #editorial{
     background-color: #eee;
-    height:100px;
+    height:100%;
 }
 
 .btn{

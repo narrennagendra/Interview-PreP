@@ -13,3 +13,6 @@ exports.getNewBlog = (req,res, next) => {
 exports.getProblem = (req,res,next) => {
 	res.render('viewProblem');
 }
+exports.getPost = (req,res, next) => {
+	res.render('viewBlog');
+}

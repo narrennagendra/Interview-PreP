@@ -11,5 +11,6 @@ router.get('/problems',isAuth, homeController.getProblems);
 router.get("/problemPost",isAuth,homeController.getNewProblem);
 router.get("/blogCreate",isAuth,homeController.getNewBlog);
 router.get("/viewProblem",isAuth,homeController.getProblem);
+router.get("/viewBlog",isAuth,homeController.getPost);
 
 module.exports = router;

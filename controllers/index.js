@@ -2,10 +2,14 @@ const Blog = require('../models/blog');
 const Problem = require('../models/problem');
 
 exports.getHome = async (req, res, next) => {
-	const blogs = await Blog.find({}, 'title author date authorName');
-	res.render('blog', {
-		blogs: blogs
-	});
+	try {
+		const blogs = await Blog.find({}, 'title author date authorName');
+		res.render('blog', {
+			blogs: blogs
+		});
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 exports.getCreateBlog = (req, res, next) => {
@@ -31,8 +35,15 @@ exports.postCreateBlog = async (req, res, next) => {
 	}
 }
 
-exports.getProblems = (req, res, next) => {
-	res.render('problems');
+exports.getProblems = async (req, res, next) => {
+	try{
+		const problems = await Problem.find({}, 'title');
+		res.render('problems', {
+			problems: problems
+		});
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 exports.getCreateProblem = (req, res, next) => {
@@ -40,7 +51,7 @@ exports.getCreateProblem = (req, res, next) => {
 };
 
 exports.postProblem = async (req, res, next) => {
-	try{
+	try {
 		const title = req.body.title;
 		const problemStatement = req.body.problemStatement;
 		const editorial = req.body.editorial;

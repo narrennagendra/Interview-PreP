@@ -12,10 +12,6 @@ const problemSchema = new Schema({
 		ref: 'User',
 		required: true,
 	},
-	authorName: {
-		type: String,
-		required: true,
-	},
 	problemStatement: [{ type: Object, required: true }],
 	editorial: [{ type: Object, required: true }],
 	date: {

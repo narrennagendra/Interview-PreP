@@ -1,22 +1,22 @@
 <%- include("partials/header") -%>
-<link rel="stylesheet" href="/css/card.css">
-<% for(var i=1;i<10;i++) { %>
-<div class="webinar-card">
-    <div class="webinar-card__content">
-        <br>
-        <h1 class="userInfo"> #Problem Title <%=i %></h1>	
-        <br><br>
-        <ul>
-            <li>Companies:</li>
-            <li><span class="label">#Company</span></li> 
-        </ul>
-        <a id="registerBtn" class="btn" href="/viewProblem">know more</a>
-        <ul>
-            <li>Related Topics:</li>
-            <li><span class="label">#Topic</span></li>
-        </ul>
-        <br>
-    </div>
-</div>
-<% } %>
+    <link rel="stylesheet" href="/css/card.css">
+    <% for (let problem of problems) { %>
+        <div class="webinar-card">
+            <div class="webinar-card__content">
+                <br>
+                <h1 class="userInfo"><%= problem.title %></h1>
+                <br><br>
+                <ul>
+                    <li>Companies:</li>
+                    <li><span class="label">#Company</span></li>
+                </ul>
+                <a id="registerBtn" class="btn" href="/viewProblem">know more</a>
+                <ul>
+                    <li>Related Topics:</li>
+                    <li><span class="label">#Topic</span></li>
+                </ul>
+                <br>
+            </div>
+        </div>
+    <% } %>
 <%- include("partials/footer") -%>

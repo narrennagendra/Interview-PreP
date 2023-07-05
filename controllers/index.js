@@ -1,8 +1,11 @@
 const Blog = require('../models/blog');
 const Problem = require('../models/problem');
 
-exports.getHome = (req, res, next) => {
-	res.render('blog');
+exports.getHome = async (req, res, next) => {
+	const blogs = await Blog.find({}, 'title author date authorName');
+	res.render('blog', {
+		blogs: blogs
+	});
 };
 
 exports.getCreateBlog = (req, res, next) => {
@@ -16,7 +19,8 @@ exports.postCreateBlog = async (req, res, next) => {
 		const blog = new Blog({
 			title: title,
 			content: content,
-			author: req.user._id
+			author: req.user._id,
+			authorName: req.user.name
 		});
 		await blog.save();
 		res.status(200).json({
@@ -44,7 +48,8 @@ exports.postProblem = async (req, res, next) => {
 			title: title,
 			problemStatement: problemStatement,
 			editorial: editorial,
-			author: req.user._id
+			author: req.user._id,
+			authorName: req.user.name
 		});
 		await problem.save();
 		res.status(200).json({

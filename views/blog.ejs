@@ -1,24 +1,25 @@
 <%- include("partials/header") -%>
-<link rel="stylesheet" href="/css/card.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="/css/card.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
-<% for(var i=0; i<10 ; i++){ %>
-<div class="webinar-card">
-    <div class="webinar-card__content">
-        <br>
-        <h3 class="userInfo"><span class="material-symbols-outlined">account_circle</span> #Person</h3>
-        <ul class="content-info">
-            <li class="info info-icon info-time">#posting time</li>
-        </ul>
-        <p>#Blog-Content</p>	
-        <ul>
-            <li><span class="label">#Tags</span></li> 
-        </ul>
-        <a id="registerBtn" class="btn">comment</a>
-    </div>
-    <div class="space"></div>
-</div>
-<%}%>
+    <% for (let blog of blogs) { %>
+        <div class="webinar-card">
+            <div class="webinar-card__content">
+                <br>
+                <h3 class="userInfo"><span class="material-symbols-outlined">account_circle</span><%=blog.authorName%></h3>
+                <ul class="content-info">
+                    <li class="info info-icon info-time"><%=blog.date%></li>
+                </ul>
+                <p><%=blog.title%></p>
+                <ul>
+                    <li><span class="label">#Tags</span></li>
+                </ul>
+                <a id="registerBtn" class="btn">comment</a>
+            </div>
+            <div class="space"></div>
+        </div>
+        <% } %>
 
 <%- include("partials/footer") -%>

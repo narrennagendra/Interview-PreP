@@ -12,5 +12,6 @@ router.post('/createBlog', isAuth, homeController.postCreateBlog);
 router.get('/problems', isAuth, homeController.getProblems);
 router.get('/createProblem', isAuth, homeController.getCreateProblem);
 router.post('/createProblem', isAuth, homeController.postProblem);
+router.get('/problem/:problemId', isAuth, homeController.getProblem)
 
 module.exports = router;

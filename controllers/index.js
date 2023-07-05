@@ -1,5 +1,6 @@
 const Blog = require('../models/blog');
 const Problem = require('../models/problem');
+const QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 
 exports.getHome = async (req, res, next) => {
 	try {
@@ -36,7 +37,7 @@ exports.postCreateBlog = async (req, res, next) => {
 }
 
 exports.getProblems = async (req, res, next) => {
-	try{
+	try {
 		const problems = await Problem.find({}, 'title');
 		res.render('problems', {
 			problems: problems
@@ -66,6 +67,22 @@ exports.postProblem = async (req, res, next) => {
 		res.status(200).json({
 			message: 'Problem created'
 		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+exports.getProblem = async (req, res, next) => {
+	try {
+		const problemId = req.params.problemId;
+		const problem = await Problem.findById(problemId);
+		const problemStatement = new QuillDeltaToHtmlConverter(problem.problemStatement);
+		const editorial = new QuillDeltaToHtmlConverter(problem.editorial);
+		res.render('viewProblem', {
+			problemStatement: problemStatement.convert(),
+			editorial: editorial.convert(),
+			title: problem.title
+		})
 	} catch (err) {
 		console.log(err);
 	}

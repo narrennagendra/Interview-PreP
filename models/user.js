@@ -20,6 +20,8 @@ const userSchema = new Schema({
 		unique: true,
 		lowercase: true,
 	},
+	blogs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Blog' }],
+	problems: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Problem' }],
 });
 
 module.exports = mongoose.model('User', userSchema);

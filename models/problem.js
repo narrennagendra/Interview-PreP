@@ -14,10 +14,11 @@ const problemSchema = new Schema({
 	},
 	problemStatement: [{ type: Object, required: true }],
 	editorial: [{ type: Object, required: true }],
+	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 	date: {
 		type: Date,
 		default: Date.now,
 	},
 });
 
-module.exports = mongoose.model("Problem", problemSchema);
+module.exports = mongoose.model('Problem', problemSchema);

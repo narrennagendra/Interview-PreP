@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const blogSchema = new Schema({
-	title: {
-		type: String,
-		required: true,
-	},
+const commentSchema = new Schema({
 	author: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
@@ -16,12 +12,18 @@ const blogSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	content: [{ type: Object, required: true }],
-	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+	content: {
+		type: String,
+		required: true
+	},
+	children: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Comment'
+	}],
 	date: {
 		type: Date,
 		default: Date.now,
 	},
 });
 
-module.exports = mongoose.model('Blog', blogSchema);
+module.exports = mongoose.model('Comment', commentSchema);

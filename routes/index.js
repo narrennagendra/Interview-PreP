@@ -12,6 +12,7 @@ router.get("/problemPost",isAuth,homeController.getNewProblem);
 router.get("/blogCreate",isAuth,homeController.getNewBlog);
 router.get("/viewProblem",isAuth,homeController.getProblem);
 router.get("/viewBlog",isAuth,homeController.getPost);
+router.get('/blog/:blogId', homeController.getBlog);
 router.get('/createBlog', isAuth, homeController.getCreateBlog);
 router.post('/createBlog', isAuth, homeController.postCreateBlog);
 router.get('/createProblem', isAuth, homeController.getCreateProblem);

@@ -4,7 +4,7 @@ const QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtm
 
 exports.getHome = async (req, res, next) => {
 	try {
-		const blogs = await Blog.find({}, 'title author date authorName');
+		const blogs = await Blog.find({}, 'title author date authorName _id');
 		res.render('blog', {
 			blogs: blogs
 		});
@@ -38,7 +38,7 @@ exports.postCreateBlog = async (req, res, next) => {
 
 exports.getProblems = async (req, res, next) => {
 	try {
-		const problems = await Problem.find({}, 'title');
+		const problems = await Problem.find({}, 'title _id');
 		res.render('problems', {
 			problems: problems
 		});
@@ -87,6 +87,17 @@ exports.getProblem = async (req, res, next) => {
 		console.log(err);
 	}
 };
-exports.getPost = (req,res, next) => {
-	res.render('viewBlog');
-}
+
+exports.getBlog = async (req, res, next) => {
+	try{
+		const blogId = req.params.blogId;
+		const blog = await Blog.findById(blogId);
+		const content = new QuillDeltaToHtmlConverter(blog.content);
+		res.render('viewBlog', {
+			title: blog.title,
+			content: content.convert()
+		})
+	} catch (err) {
+		console.log(err);
+	}
+};

@@ -10,15 +10,15 @@
                 <br>
                 <h3 class="userInfo"><span class="material-symbols-outlined">account_circle</span><%=blog.authorName%></h3>
                 <ul class="content-info">
-                    <li class="info info-icon info-time"><%=blog.date%></li>
+                    <li class="info info-icon info-time"><%=(blog.date)%></li>
                 </ul>
                 <p><%=blog.title%></p>
+                <a id="registerBtn" class="btn" href="/blog/<%=blog._id%>">Read more</a>
                 <ul>
                     <li><span class="label">#Tags</span></li>
                 </ul>
-                <a id="registerBtn" class="btn" href="/blog/<%=blog._id%>">comment</a>
             </div>
-            <div class="space"></div>
+            
         </div>
         <% } %>
 

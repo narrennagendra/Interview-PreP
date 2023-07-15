@@ -27,9 +27,10 @@ exports.postCreateBlog = async (req, res, next) => {
 			author: req.user._id,
 			authorName: req.user.name
 		});
-		await blog.save();
+		const savedBlog = await blog.save();
 		res.status(200).json({
-			message: 'blog created'
+			message: 'blog created',
+			path: '/blog/' + savedBlog._id,
 		});
 	} catch (err) {
 		console.log(err);
@@ -63,9 +64,10 @@ exports.postProblem = async (req, res, next) => {
 			author: req.user._id,
 			authorName: req.user.name
 		});
-		await problem.save();
+		const savedProblem = await problem.save();
 		res.status(200).json({
-			message: 'Problem created'
+			message: 'Problem created',
+			path: '/problem/' + savedProblem._id,
 		});
 	} catch (err) {
 		console.log(err);
@@ -76,9 +78,13 @@ exports.getProblem = async (req, res, next) => {
 	try {
 		const problemId = req.params.problemId;
 		const problem = await Problem.findById(problemId);
+		if (!problem) {
+			res.redirect('/problems');
+		}
 		const problemStatement = new QuillDeltaToHtmlConverter(problem.problemStatement);
 		const editorial = new QuillDeltaToHtmlConverter(problem.editorial);
 		res.render('viewProblem', {
+			P_id: problem._id,
 			problemStatement: problemStatement.convert(),
 			editorial: editorial.convert(),
 			title: problem.title
@@ -89,15 +95,37 @@ exports.getProblem = async (req, res, next) => {
 };
 
 exports.getBlog = async (req, res, next) => {
-	try{
+	try {
 		const blogId = req.params.blogId;
-		const blog = await Blog.findById(blogId);
+		const blog = await Blog.findById(blogId)
+			.populate('comments');
+		if (!blog) {
+			res.redirect('/blogs');
+		}
 		const content = new QuillDeltaToHtmlConverter(blog.content);
+		const comments = blog.comments.map(comment => populateNestedComments(comment));
 		res.render('viewBlog', {
+			B_id: blog._id,
 			title: blog.title,
-			content: content.convert()
+			content: content.convert(),
+			comments: comments
 		})
 	} catch (err) {
 		console.log(err);
 	}
 };
+
+function populateNestedComments(comment) {
+	return Comment.populate(comment, { path: 'children' })
+		.then(comment => {
+			if (comment.children.length > 0) {
+				const childPromises = comment.children.map(childComment => populateNestedComments(childComment));
+				return Promise.all(childPromises)
+					.then(populatedChildren => {
+						comment.children = populatedChildren;
+						return comment;
+					});
+			}
+			return comment;
+		});
+}

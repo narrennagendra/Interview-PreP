@@ -11,170 +11,32 @@
     <p>
       <%- content -%>
     </p>
-    <div class="form">
-      <div class="form-group">
-        <label for="comment">Your Comment</label>
-        <textarea name="comment" class="form-control" rows="3"></textarea>
+
+    <form action="/blog/comment/<%=_id%>" method="POST">
+      <input type="hidden" name="commentParentId" value="null">
+      <div class="form">
+        <div class="form-group">
+          <label for="comment">Your Comment</label>
+          <textarea name="comment" class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default btn-send">Send</button>
       </div>
-      <button type="submit" class="btn btn-default btn-send">Send</button>
-    </div>
+    </form>
+
     <br>
+
     <h3><strong>Comments</strong></h3>
+    
     <div class="comment-container">
       <div class="post-comments">
-      <div class="row">
-    
-        <div class="media">
-          <!-- first comment -->
-          <div class="media-heading">
-            <button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
-              <i class="glyphicon glyphicon-chevron-up"></i>
-            </button> 
-            <div class="user-info" style="padding: 5px;">
-              <h4><strong style="padding: 2px;"> Bhaskar </strong> </h4>
-              <small> (Posted on Jan, 9)</small>
-            </div>
-          </div>
-          <div class="panel-collapse collapse in" id="collapse1">
-            <div class="media-body">
-              <p>This is a comment-1</p>
-              <div class="comment-meta">
-                <span><a href="#">Delete</a></span>
-                <span>
-                  <a class="" role="button" data-toggle="collapse" href="#replyComment1" aria-expanded="false" aria-controls="collapseExample">Reply</a>
-                </span>
-                <div class="collapse" id="replyComment1">
-                  <div class="form">
-                    <div class="form-group">
-                      <label for="comment">Your Comment</label>
-                      <textarea name="comment" class="form-control" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-default btn-send">Send</button>
-                  </div>
-                </div>
-              </div>
-              <!-- comment-meta -->
-              <div class="media">
-              <!-- first comment -->
-          
-                <div class="media-heading">
-                  <button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="glyphicon glyphicon-chevron-up"></i>
-                  </button> 
-                  <div class="user-info" style="padding: 5px;">
-                    <h4><strong style="padding: 2px;"> Nagendra </strong> </h4>
-                    <small> (Posted on Jan, 9)</small>
-                  </div>
-                </div>
-                <div class="panel-collapse collapse in" id="collapse2">
-                  <div class="media-body">
-                    <p>This is a reply to comment-1</p>
-                    <div class="comment-meta">
-                      <span><a href="#">Delete</a></span>
-                      <span>
-                        <a class="" role="button" data-toggle="collapse" href="#replyComment3" aria-expanded="false" aria-controls="collapseExample">Reply</a>
-                      </span>
-                      <div class="collapse" id="replyComment3">
-                      <div class="form">
-                        <div class="form-group">
-                          <label for="comment">Your Comment</label>
-                          <textarea name="comment" class="form-control" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-default btn-send">Send</button>
-                      </div>
-                    </div>
-                  </div>
-                    <!-- comment-meta -->
-              <div class="media">
-                <!-- answer to the first comment -->
-                <div class="media-heading">
-                  <button class="btn btn-default btn-collapse btn-xs" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="glyphicon glyphicon-chevron-up"></i>
-                  </button>
-                  <div class="user-info" style="padding: 5px;">
-                    <h4><strong style="padding: 2px;"> Sravani </strong> </h4>
-                    <small> (Posted on Jan, 9)</small>
-                  </div>
-                </div>
-                <div class="panel-collapse collapse in" id="collapse3">
-                  <div class="media-body">
-                    <p>This is a reply to reply to comment-1</p>
-                    <div class="comment-meta">
-                      <span><a href="#">Delete</a></span>
-                      <span>
-                        <a class="" role="button" data-toggle="collapse" href="#replyComment4" aria-expanded="false" aria-controls="collapseExample">Reply</a>
-                      </span>
-                      <div class="collapse" id="replyComment4">
-                        <div class="form">
-                          <div class="form-group">
-                            <label for="comment">Your Comment</label>
-                            <textarea name="comment" class="form-control" rows="3"></textarea>
-                          </div>
-                          <button type="submit" class="btn btn-default btn-send">Send</button>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- comment-meta -->
-                  </div>
-                </div>
-                <!-- comments -->
-    
-              </div>
-              <div class="media">
-                <!-- answer to the first comment -->
-                <div class="media-heading">
-                  <button class="btn btn-default btn-collapse btn-xs" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="glyphicon glyphicon-chevron-up"></i>
-                  </button>
-                  <div class="user-info" style="padding: 5px;">
-                    <h4><strong style="padding: 2px;"> ------ </strong> </h4>
-                    <small> (Posted on Jan, 9)</small>
-                  </div>
-                </div>
-                <div class="panel-collapse collapse in" id="collapse4">
-                  <div class="media-whole">
-                    <div class="media-body">
-                      <p>This is a reply to reply to comment-1</p>
-                      <div class="comment-meta">
-                        <span><a href="#">Delete</a></span>
-                        <span>
-                          <a class="" role="button" data-toggle="collapse" href="#replyComment5" aria-expanded="false" aria-controls="collapseExample">Reply</a>
-                        </span>
-                        <div class="collapse" id="replyComment5">
-                          <div class="form">
-                            <div class="form-group">
-                              <label for="comment">Your Comment</label>
-                              <textarea name="comment" class="form-control" rows="3"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-default">Send</button>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- comment-meta -->
-                    </div>
-                  </div>
-                </div>
-                <!-- comments -->
-    
-              </div>
-              <!-- answer to the first comment -->
-    
-            </div>
-          </div>
-          <!-- comments -->
-    
+        <div class="row">
+          <!-- this where all the comments goes -->
+          <% for (let comment of comments) { %>
+            <%- include('comment', {comment: comment, B_id: _id}) %>
+          <% } %>
         </div>
-        <!-- first comment -->
         
-          </div>
-          <!-- comments -->
-    
-        </div>
-        <!-- first comment -->
       </div>
-    
     </div>
-    <!-- post-comments -->
-    </div>	
-    <script src="/js/comment.js"></script>
-<%- include('partials/footer') -%>
+      <script src="/js/comment.js"></script>
+      <%- include('partials/footer') -%>

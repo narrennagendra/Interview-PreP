@@ -27,7 +27,7 @@
 								<input type="hidden" name="commentParentId" value="<%=_id%>">
 								<div class="form-group">
 									<label for="comment">Your Comment</label>
-									<textarea name="comment" class="form-control" rows="3"></textarea>
+									<textarea name="content" class="form-control" rows="3"></textarea>
 								</div>
 								<button type="submit" class="btn btn-default">Send</button>
 							</form>
@@ -35,7 +35,7 @@
 					</div>
 				</div>
 				<!-- this is where all the next comment goes -->
-				<% for(child in comment.children) { %>
+				<% for (child in comment.children) { %>
 					<%- include('comment', {comment: child, B_id: B_id}) %>
 				<% } %>
 			</div>

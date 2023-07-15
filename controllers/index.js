@@ -1,5 +1,7 @@
 const Blog = require('../models/blog');
 const Problem = require('../models/problem');
+const Comment = require('../models/comment');
+
 const QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
 
 exports.getHome = async (req, res, next) => {
@@ -110,6 +112,38 @@ exports.getBlog = async (req, res, next) => {
 			content: content.convert(),
 			comments: comments
 		})
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+exports.postComment = async (req, res, next) => {
+	try{
+		const blogId = req.params.blogId;
+		const parentId = req.body.commentParentId;
+		const content = req.body.content;
+		const comment = new Comment({
+			author: req.user._id,
+			authorName: req.user.name,
+			content: content
+		});
+		if(parentId === "null") {
+			const blog = await Blog.findById(blogId);
+			if(!blog) {
+				return res.redirect('/');
+			}
+			blog.comments.push(comment);
+			await blog.save();
+		} else {
+			const parentComment = await Comment.findById(parentId);
+			if(!parentComment) {
+				return res.redirect('/blog/' + blogId);
+			}
+			parentComment.children.push(comment);
+			await parentComment.save();
+		}
+		res.redirect('/blog/' + blogId);
+
 	} catch (err) {
 		console.log(err);
 	}

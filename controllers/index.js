@@ -105,40 +105,43 @@ exports.getBlog = async (req, res, next) => {
 			res.redirect('/blogs');
 		}
 		const content = new QuillDeltaToHtmlConverter(blog.content);
-		const comments = blog.comments.map(comment => populateNestedComments(comment));
+		const populatedComments = blog.comments.map(comment => populateNestedComments(comment));
+		const comments = await Promise.all(populatedComments);
 		res.render('viewBlog', {
-			B_id: blog._id,
+			_id: blog._id,
 			title: blog.title,
 			content: content.convert(),
 			comments: comments
-		})
+		});
 	} catch (err) {
 		console.log(err);
 	}
 };
 
 exports.postComment = async (req, res, next) => {
-	try{
+	try {
 		const blogId = req.params.blogId;
 		const parentId = req.body.commentParentId;
-		const content = req.body.content;
+		const content = "test content";
 		const comment = new Comment({
 			author: req.user._id,
 			authorName: req.user.name,
 			content: content
 		});
-		if(parentId === "null") {
+		if (parentId === "null") {
 			const blog = await Blog.findById(blogId);
-			if(!blog) {
+			if (!blog) {
 				return res.redirect('/');
 			}
+			await comment.save();
 			blog.comments.push(comment);
 			await blog.save();
 		} else {
 			const parentComment = await Comment.findById(parentId);
-			if(!parentComment) {
+			if (!parentComment) {
 				return res.redirect('/blog/' + blogId);
 			}
+			await comment.save();
 			parentComment.children.push(comment);
 			await parentComment.save();
 		}
@@ -149,7 +152,7 @@ exports.postComment = async (req, res, next) => {
 	}
 };
 
-function populateNestedComments(comment) {
+const populateNestedComments = (comment) => {
 	return Comment.populate(comment, { path: 'children' })
 		.then(comment => {
 			if (comment.children.length > 0) {

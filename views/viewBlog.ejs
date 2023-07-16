@@ -26,17 +26,15 @@
     <br>
 
     <h3><strong>Comments</strong></h3>
-    
+
     <div class="comment-container">
       <div class="post-comments">
         <div class="row">
-          <!-- this where all the comments goes -->
           <% for (let comment of comments) { %>
             <%- include('comment', {comment: comment, B_id: _id}) %>
           <% } %>
         </div>
-        
       </div>
     </div>
-      <script src="/js/comment.js"></script>
-      <%- include('partials/footer') -%>
+  <script src="/js/comment.js"></script>
+<%- include('partials/footer') -%>

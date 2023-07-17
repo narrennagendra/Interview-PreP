@@ -1,6 +1,6 @@
 <div class="media">
 	<div class="media-heading">
-		<button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#collapse1"
+		<button class="btn btn-default btn-xs" type="button" data-toggle="collapse" data-target="#collapse<%=comment._id%>"
 			aria-expanded="false" aria-controls="collapseExample">
 			<i class="glyphicon glyphicon-chevron-up"></i>
 		</button>
@@ -9,7 +9,7 @@
 			<small> <%= comment.date %> </small>
 		</div>
 	</div>
-	<div class="panel-collapse collapse in" id="collapse1">
+	<div class="panel-collapse collapse in" id="collapse<%=comment._id%>">
 		<div class="media-body">
 			<p><%= comment.content %></p>
 			<div class="comment-meta">

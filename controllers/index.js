@@ -122,7 +122,7 @@ exports.postComment = async (req, res, next) => {
 	try {
 		const blogId = req.params.blogId;
 		const parentId = req.body.commentParentId;
-		const content = "test content";
+		const content = req.body.comment;
 		const comment = new Comment({
 			author: req.user._id,
 			authorName: req.user.name,

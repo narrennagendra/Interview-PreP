@@ -14,7 +14,6 @@ body {
 	height: 100%;
 	margin: 20px 0 50px;
 }
-
 nav .logo {
     padding: 22px 20px;
     height: 80px;
@@ -48,7 +47,11 @@ nav ul li a.active{
     color: #fff;
     border-radius: 6px;
 }
-
+nav ul li a:hover{
+    /* text-decoration: underline; */
+    /* color: #428bca; */
+    border-bottom: 2px solid #FF4B2B;
+}
 footer {
     background-color: #222;
     color: #fff;

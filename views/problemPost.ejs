@@ -18,10 +18,6 @@
 	<br><br>
 	<div id="editorial"></div>
 	<br>
-	<div class="tags">
-		<label>Companies</label>
-		<textarea name="companiesInput" cols="100" rows="1" class="composeCon" placeholder="If more than one, keep it in commas. Ex:CompanyName, Experience"></textarea>
-	</div>
 	<br>
 	<div class="tags">
 		<label>Related topics</label>
@@ -55,10 +51,12 @@
 				const editorContent = editor.getContents().ops;
 				const editorialContent = editorial.getContents().ops;
 				const title = document.querySelector('.form-control').value;
+				const tags = document.getElementsByName('topicsInput')[0].value;
 				const data = {
 					problemStatement: editorContent,
 					editorial: editorialContent,
-					title: title
+					title: title,
+					tags: tags
 				}
 				const response = await fetch('/createProblem', {
 					method: 'POST',

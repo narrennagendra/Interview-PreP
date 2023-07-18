@@ -18,6 +18,7 @@ const blogSchema = new Schema({
 	},
 	content: [{ type: Object, required: true }],
 	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+	tags: [{type: String}],
 	date: {
 		type: Date,
 		default: Date.now,

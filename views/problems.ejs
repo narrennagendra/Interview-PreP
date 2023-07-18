@@ -6,14 +6,12 @@
                 <br>
                 <h1 class="userInfo"><%= problem.title %></h1>
                 <br><br>
-                <ul>
-                    <li>Companies:</li>
-                    <li><span class="label">#Company</span></li>
-                </ul>
                 <a id="registerBtn" class="btn" href="/problem/<%=problem._id%>">know more</a>
                 <ul>
                     <li>Related Topics:</li>
-                    <li><span class="label">#Topic</span></li>
+                    <% for (let tag of problem.tags) { %>
+                        <li><span class="label"><%= tag %></span></li>
+                    <% } %>
                 </ul>
                 <br>
             </div>

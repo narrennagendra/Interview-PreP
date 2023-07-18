@@ -6,7 +6,7 @@ const QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtm
 
 exports.getHome = async (req, res, next) => {
 	try {
-		const blogs = await Blog.find({}, 'title author date authorName _id');
+		const blogs = await Blog.find({}, 'title author date authorName _id tags');
 		res.render('blog', {
 			blogs: blogs
 		});
@@ -23,11 +23,14 @@ exports.postCreateBlog = async (req, res, next) => {
 	try {
 		const title = req.body.title;
 		const content = req.body.content;
+		const tags = req.body.tags.split(',');
+		console.log(tags);
 		const blog = new Blog({
 			title: title,
 			content: content,
 			author: req.user._id,
-			authorName: req.user.name
+			authorName: req.user.name,
+			tags: tags
 		});
 		const savedBlog = await blog.save();
 		res.status(200).json({
@@ -41,7 +44,7 @@ exports.postCreateBlog = async (req, res, next) => {
 
 exports.getProblems = async (req, res, next) => {
 	try {
-		const problems = await Problem.find({}, 'title _id');
+		const problems = await Problem.find({}, 'title _id tags');
 		res.render('problems', {
 			problems: problems
 		});
@@ -59,12 +62,14 @@ exports.postProblem = async (req, res, next) => {
 		const title = req.body.title;
 		const problemStatement = req.body.problemStatement;
 		const editorial = req.body.editorial;
+		const tags = req.body.tags.split(',');
 		const problem = new Problem({
 			title: title,
 			problemStatement: problemStatement,
 			editorial: editorial,
 			author: req.user._id,
-			authorName: req.user.name
+			authorName: req.user.name,
+			tags: tags
 		});
 		const savedProblem = await problem.save();
 		res.status(200).json({

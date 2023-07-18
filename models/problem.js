@@ -14,7 +14,7 @@ const problemSchema = new Schema({
 	},
 	problemStatement: [{ type: Object, required: true }],
 	editorial: [{ type: Object, required: true }],
-	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+	tags: [{type: String}],
 	date: {
 		type: Date,
 		default: Date.now,

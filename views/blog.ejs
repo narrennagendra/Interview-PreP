@@ -15,7 +15,9 @@
                 <p><%=blog.title%></p>
                 <a id="registerBtn" class="btn" href="/blog/<%=blog._id%>">Read more</a>
                 <ul>
-                    <li><span class="label">#Tags</span></li>
+                    <% for (let tag of blog.tags) { %>
+                        <li><span class="label"><%= tag %></span></li>
+                    <% } %>
                 </ul>
             </div>
             

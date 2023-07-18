@@ -34,9 +34,12 @@
 			async function sendPost() {
 				const content = editor.getContents().ops;
 				const title = document.querySelector('.form-control').value;
+				const tags = document.getElementsByName('tagsInput')[0].value;
+				console.log(tags);
 				const data = {
 					content: content,
 					title: title,
+					tags: tags
 				}
 				const response = await fetch('/createBlog', {
 					method: 'POST',

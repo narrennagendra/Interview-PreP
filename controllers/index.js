@@ -8,7 +8,8 @@ exports.getHome = async (req, res, next) => {
 	try {
 		const blogs = await Blog.find({}, 'title author date authorName _id tags');
 		res.render('blog', {
-			blogs: blogs
+			blogs: blogs,
+			navPath: 'home'
 		});
 	} catch (err) {
 		console.log(err);
@@ -16,7 +17,9 @@ exports.getHome = async (req, res, next) => {
 };
 
 exports.getCreateBlog = (req, res, next) => {
-	res.render('blogCreate');
+	res.render('blogCreate', {
+		navPath: 'create blog'
+	});
 }
 
 exports.postCreateBlog = async (req, res, next) => {
@@ -46,7 +49,8 @@ exports.getProblems = async (req, res, next) => {
 	try {
 		const problems = await Problem.find({}, 'title _id tags');
 		res.render('problems', {
-			problems: problems
+			problems: problems,
+			navPath: 'problems'
 		});
 	} catch (err) {
 		console.log(err);
@@ -54,7 +58,9 @@ exports.getProblems = async (req, res, next) => {
 };
 
 exports.getCreateProblem = (req, res, next) => {
-	res.render('problemPost');
+	res.render('problemPost', {
+		navPath: 'create problem'
+	});
 };
 
 exports.postProblem = async (req, res, next) => {
@@ -94,7 +100,8 @@ exports.getProblem = async (req, res, next) => {
 			P_id: problem._id,
 			problemStatement: problemStatement.convert(),
 			editorial: editorial.convert(),
-			title: problem.title
+			title: problem.title,
+			navPath: 'problems'
 		})
 	} catch (err) {
 		console.log(err);
@@ -116,7 +123,8 @@ exports.getBlog = async (req, res, next) => {
 			_id: blog._id,
 			title: blog.title,
 			content: content.convert(),
-			comments: comments
+			comments: comments,
+			navPath: 'home'
 		});
 	} catch (err) {
 		console.log(err);

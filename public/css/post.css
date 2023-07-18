@@ -9,7 +9,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	 flex-direction: column;
+	flex-direction: column;
 	font-family: 'Montserrat', sans-serif;
 	height: 100%;
 	margin: 20px 0 50px;
@@ -141,6 +141,7 @@ textarea{
 #editor, #editorial{
     background-color: #eee;
     height:100%;
+	font-family:monospace;
 }
 
 .btn{

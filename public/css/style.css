@@ -67,7 +67,10 @@ button.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
-
+.invalid-form{
+	color: red;
+	visibility:visible;
+}
 form {
 	background-color: #FFFFFF;
 	display: flex;
@@ -82,6 +85,7 @@ form {
 input {
 	background-color: #eee;
 	border: none;
+	border-radius: 1%;
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;

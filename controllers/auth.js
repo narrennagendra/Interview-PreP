@@ -4,8 +4,12 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 
+let log_msg,sign_msg;
 exports.getAuthentication = (req, res, next) => {
-	res.render('authentication/authentication');
+	res.render('authentication/authentication',{
+		log_msg: decodeURIComponent(log_msg),
+		sign_msg: decodeURIComponent(sign_msg)
+	});
 };
 
 exports.postLogin = async (req, res, next) => {
@@ -19,6 +23,7 @@ exports.postLogin = async (req, res, next) => {
 		const user = await User.findOne({ email: email })
 		if (!user) {
 			const error_msg = encodeURIComponent('user does not exist');
+			log_msg = error_msg;
 			return res.redirect(`/authenticate?error=${error_msg}`)
 		}
 		const domatch = await bcrypt.compare(password, user.password)
@@ -30,6 +35,7 @@ exports.postLogin = async (req, res, next) => {
 			})
 		} else {
 			const error_msg = encodeURIComponent('incorrect password');
+			log_msg = error_msg
 			res.redirect(`/authenticate?msg=${error_msg}`)
 		}
 	} catch (err) {
@@ -54,6 +60,7 @@ exports.postSignup = async (req, res, next) => {
 		});
 		await user.save();
 		const msg = encodeURIComponent('Please enter your credentials');
+		sign_msg = msg;
 		res.redirect(`/authenticate?msg=${msg}`);
 	} catch (err) {
 		console.log(err);

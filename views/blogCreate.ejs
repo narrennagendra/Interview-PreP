@@ -7,16 +7,18 @@
 		<h2>Compose</h2>
 		<div class="title">
 			<label>Title</label>
-			<textarea class="form-control" name="titleInput" cols="100" rows="1" class="composeCon"></textarea>
+			<textarea class="form-control" name="titleInput" cols="100" rows="1" class="composeCon"><%=title%></textarea>
 		</div>
 		<br>
 		<label>Post</label>
 		<br><br>
-		<div id="editor"></div>
+		<div id="editor">
+			<%-content%>
+		</div>
 		<br>
 		<div class="tags">
 			<label>Tags</label>
-			<textarea name="tagsInput" cols="100" rows="1" class="composeCon" placeholder="If more than one, keep it in commas. Ex:CompanyName, Experience"></textarea>
+			<textarea name="tagsInput" cols="100" rows="1" class="composeCon" placeholder="If more than one, keep it in commas. Ex:CompanyName, Experience"><%=tags%></textarea>
 		</div>
 		<br>
 		<script>
@@ -41,15 +43,18 @@
 					title: title,
 					tags: tags
 				}
-				const response = await fetch('/createBlog', {
+				const response = await fetch('http://localhost:3000<%=button_action%>', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify(data)
 				});
+				const resData = await response.json();
 				if(response.ok){
-					window.location.replace('http://localhost:3000');
+					window.location.replace('http://localhost:3000' + resData.path);
+				} else {
+					window.location.replace('http://localhost:3000')
 				}
 			}
 

@@ -7,25 +7,29 @@
 	<h2>Compose Problem</h2>
 	<div class="title">
 		<label>Problem Title</label>
-		<textarea class="form-control" name="titleInput" cols="100" rows="1" class="composeCon"></textarea>
+		<textarea class="form-control" name="titleInput" cols="100" rows="1" class="composeCon"><%=title%></textarea>
 	</div>
 	<br>
 	<label >Problem details</label>
 	<br><br>
-	<div id="editor"></div>
+	<div id="editor">
+		<%-problemStatement%>
+	</div>
 	<br>
 	<label >Problem Editorial</label>
 	<br><br>
-	<div id="editorial"></div>
+	<div id="editorial">
+		<%-editorial%>
+	</div>
 	<br>
 	<br>
 	<div class="tags">
 		<label>Related topics</label>
-		<textarea name="topicsInput" cols="100" rows="1" class="composeCon" placeholder="If more than one, keep it in commas. Ex:CompanyName, Experience"></textarea>
+		<textarea name="topicsInput" cols="100" rows="1" class="composeCon" placeholder="If more than one, keep it in commas. Ex:CompanyName, Experience"><%=tags%></textarea>
 	</div>
 	<br>
 	<script>
-		var editor = new Quill('#editor', {
+		const config = {
 				modules: {
 					toolbar: [
 						[{ header: [1, 2, false] }],
@@ -34,18 +38,10 @@
 					]
 				},
 				theme: 'snow',
-			});
+			}
+		var editor = new Quill('#editor', config);
 		
-			var editorial = new Quill('#editorial', {
-				modules: {
-					toolbar: [
-						[{ header: [1, 2, false] }],
-						['bold', 'italic', 'underline'],
-						['image', 'code-block']
-					]
-				},
-				theme: 'snow',
-			});
+			var editorial = new Quill('#editorial', config);
 
 			async function sendPost() {
 				const editorContent = editor.getContents().ops;
@@ -58,15 +54,19 @@
 					title: title,
 					tags: tags
 				}
-				const response = await fetch('/createProblem', {
+				const response = await fetch('<%=button_action%>', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify(data)
 				});
+				const resData = await response.json();
+				console.log(resData)
 				if(response.ok){
-					window.location.replace('http://localhost:3000');
+					window.location.replace('http://localhost:3000' + resData.path);
+				} else {
+					window.location.replace('http://localhost:3000/problems');
 				}
 			}
 	</script>

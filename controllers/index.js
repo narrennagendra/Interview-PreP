@@ -18,16 +18,65 @@ exports.getHome = async (req, res, next) => {
 
 exports.getCreateBlog = (req, res, next) => {
 	res.render('blogCreate', {
-		navPath: 'create blog'
+		navPath: 'create blog',
+		title: '',
+		content: '',
+		tags: '',
+		button_action: '/createBlog'
 	});
 }
+
+exports.getEditBlog = async (req, res, next) => {
+	try {
+		const blogId = req.params.blogId;
+		const blog = await Blog.findById(blogId);
+		if ((!blog) || (blog.author.toString() !== req.user._id.toString())) {
+			return res.redirect('/');
+		}
+		const content = new QuillDeltaToHtmlConverter(blog.content);
+		res.render('blogCreate', {
+			navPath: 'edit blog',
+			content: content.convert(),
+			title: blog.title,
+			tags: blog.tags.join(','),
+			button_action: '/editBlog/' + blogId
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+exports.postEditBlog = async (req, res, next) => {
+	try {
+		const blogId = req.params.blogId;
+		const blog = await Blog.findById(blogId);
+		if (!blog || req.user._id.toString() !== blog.author.toString()) {
+			return res.status(403).json({
+				message: 'Forbidden',
+				path: '/blog/' + blog._id,
+			});
+		}
+		const updatedTitle = req.body.title;
+		const updatedT4ags = req.body.tags.split(',');
+		const updatedContent = req.body.content;
+		blog.title = updatedTitle;
+		blog.tags = updatedT4ags;
+		blog.content = updatedContent;
+		await blog.save();
+		res.status(200).json({
+			message: 'blog sucessfully edited',
+			path: '/blog/' + blog._id,
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
 
 exports.postCreateBlog = async (req, res, next) => {
 	try {
 		const title = req.body.title;
 		const content = req.body.content;
 		const tags = req.body.tags.split(',');
-		console.log(tags);
 		const blog = new Blog({
 			title: title,
 			content: content,
@@ -59,7 +108,12 @@ exports.getProblems = async (req, res, next) => {
 
 exports.getCreateProblem = (req, res, next) => {
 	res.render('problemPost', {
-		navPath: 'create problem'
+		navPath: 'problems',
+		title: '',
+		tags: '',
+		problemStatement: '',
+		editorial: '',
+		button_action: '/createProblem',
 	});
 };
 
@@ -87,12 +141,63 @@ exports.postProblem = async (req, res, next) => {
 	}
 };
 
+exports.getEditProblem = async (req, res, next) => {
+	try {
+		const problemId = req.params.problemId;
+		const problem = await Problem.findById(problemId);
+		if (!problem || req.user._id.toString() !== problem.author.toString()) {
+			 return res.redirect('/problems');
+		}
+		const problemStatement = new QuillDeltaToHtmlConverter(problem.problemStatement);
+		const editorial = new QuillDeltaToHtmlConverter(problem.editorial);
+		res.render('problemPost', {
+			navPath: 'problems',
+			title: problem.title,
+			tags: problem.tags.join(','),
+			problemStatement: problemStatement.convert(),
+			editorial: editorial.convert(),
+			button_action: '/editProblem/' + problemId
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+exports.postEditProblem = async (req, res, next) => {
+	try {
+		const problemId = req.params.problemId;
+		const problem = await Problem.findById(problemId);
+		if (!problem || req.user._id.toString() !== problem.author.toString()) {
+			console.log('error ocuured')
+			return res.status(403).json({
+				message: 'Forbidden',
+				path: '/problem/' + problemId._id,
+			});
+		}
+		const updatedTitle = req.body.title;
+		const updatedProblemStatement = req.body.problemStatement;
+		const updatedEditorial = req.body.editorial;
+		const updatedTags = req.body.tags.split(',');
+		problem.title = updatedTitle;
+		problem.tags = updatedTags;
+		problem.problemStatement = updatedProblemStatement;
+		problem.editorial = updatedEditorial;
+		await problem.save();
+		res.status(200).json({
+			message: 'problem sucessfully updated',
+			path: '/problem/' + problemId,
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 exports.getProblem = async (req, res, next) => {
 	try {
 		const problemId = req.params.problemId;
 		const problem = await Problem.findById(problemId);
 		if (!problem) {
-			res.redirect('/problems');
+			return res.redirect('/problems');
 		}
 		const problemStatement = new QuillDeltaToHtmlConverter(problem.problemStatement);
 		const editorial = new QuillDeltaToHtmlConverter(problem.editorial);
@@ -101,7 +206,8 @@ exports.getProblem = async (req, res, next) => {
 			problemStatement: problemStatement.convert(),
 			editorial: editorial.convert(),
 			title: problem.title,
-			navPath: 'problems'
+			navPath: 'problems',
+			edit: problem.author.toString() === req.user._id.toString()
 		})
 	} catch (err) {
 		console.log(err);
@@ -124,7 +230,8 @@ exports.getBlog = async (req, res, next) => {
 			title: blog.title,
 			content: content.convert(),
 			comments: comments,
-			navPath: 'home'
+			navPath: 'home',
+			edit: blog.author.toString() === req.user._id.toString()
 		});
 	} catch (err) {
 		console.log(err);
